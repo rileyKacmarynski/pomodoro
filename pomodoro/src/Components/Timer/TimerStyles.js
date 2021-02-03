@@ -24,12 +24,11 @@ const Styles = styled.div`
   border-radius: 50%;
   width: var(--circle-size);
   height: var(--circle-size);
-  transition: background-color .15s linear;
-  animation: ${props => getFadeColor(props)} 1s forwards;
-
+  background-color: ${ props => props.theme.primary };
+  transition: transform 150ms ease-in-out, background-color 150ms ease-in-out;
+  
   &:hover {
     cursor: pointer;
-    background-color: ${props => props.theme.bgPrimary};
   }
   
   &:before {
@@ -62,8 +61,8 @@ const Styles = styled.div`
 
   &:hover:before {
   
-    box-shadow: 0em 0em 10em ${ props => props.theme.accent },
-                0em 0em 10em ${ props => props.theme.primary };
+    box-shadow: 0em 0em 5em -2em ${ props => props.theme.accent },
+                0em 0em 5em -2em ${ props => props.theme.accent };
   }
 `;
 

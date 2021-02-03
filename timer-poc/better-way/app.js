@@ -94,14 +94,12 @@ function getCircleDimensions(width){
 }
 
 
-function createTimer(){
+function createTimer(countDownFrom){
   countDownFromInSeconds = countDownFrom;
-  secondsLeft = countDownFrom;
   startTime = null;
   endTime = null;
   isPaused = false;
   pauseStart = null;
-
 
   const getCountDownFromInSeconds = () => countDownFromInSeconds;
   const getEndTime = () => endTime;

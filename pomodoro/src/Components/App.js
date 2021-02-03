@@ -15,7 +15,7 @@ const Main = styled.main`
 
 // this will have to come from settings at some point
 const timerSettings = {
-  work: 1 * 60,
+  work: 1 * 10,
   shortBreak: .5 * 60,
   longBreak: 1 * 60
 }
