@@ -1,0 +1,173 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --clr-bg-primary: rgba(30, 33, 64, 1);
+  --clr-bg-secondary: rgba(42, 45, 82, 1);
+  --clr-primary: rgba(21, 25, 50, 1);
+  --clr-accent: rgba(246, 113, 115, 1);
+  --clr-text-light: rgba(255, 255, 255, .8);
+  --clr-text-medium: rgba(255, 255, 255, .65);
+  --clr-text-dark: rgba(21, 25, 50, 1);
+
+  --animation-duration: 1s;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--clr-bg-primary);
+  color: var(--clr-text-light);
+}
+
+.content {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pomodoro,
+.pomodoro::before, 
+.progress-container {
+  border-radius: 50%;
+}
+
+.pomodoro > * {
+  position: absolute;
+}
+
+.pomodoro {
+  --circle-size: clamp(15rem, 50vw, 25rem);
+
+  position: relative;
+  background-color: var(--clr-primary);
+  width: var(--circle-size);
+  height: var(--circle-size);
+  transition: background-color .15s linear;
+  animation: fadeColor 1s forwards;
+}
+
+/* messing with opacity here will create another stacking context
+   and the gradient will not sit behind solid circle */
+@keyframes fadeColor {
+  from {
+    background-color: var(--clr-bg-primary);
+  }
+  to {
+    background-color: var(--clr-primary);
+  }
+}
+
+.pomodoro::before {
+  /* This will be the width for the border. Can't use border property with gradient */
+  --border-width: 1rem;     
+
+  position: absolute;
+  content: '';
+  height: calc(100% + 2 * var(--border-width));   /* 2x to add border width on each side */
+  width: calc(100% + 2 * var(--border-width));
+  transform: translate(calc(-1 * var(--border-width)), calc(-1 * var(--border-width)));
+  z-index: -1;
+  background-image: linear-gradient(135deg, 
+  var(--clr-primary) 25%, 
+  var(--clr-primary) 25%,  
+  var(--clr-bg-secondary) 75%);
+  opacity: 0;
+  box-shadow: -3em -3em 5em var(--clr-bg-secondary), 
+  3em 3em 5em var(--clr-primary);
+  transition: box-shadow .15s linear;
+  transition-delay: .1s;
+  animation: fadeOpacity var(--animation-duration) forwards;
+}
+
+@keyframes fadeOpacity {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.pomodoro:hover {
+  cursor: pointer;
+  background-color: var(--clr-bg-primary);
+}
+
+.pomodoro:hover::before {
+  box-shadow: 0em 0em 10em var(--clr-accent),
+              0em 0em 10em var(--clr-primary);
+}
+
+.progress-container {
+  height: 100%;
+  width: 100%;
+  padding: .25rem;
+}
+
+.progress-bar .bar {
+  /* height: 100%;
+  width: 100%; */
+  fill: none;
+  /* r: calc(50% - .5rem);   only works with SVG 2. subtract stroke width from circle radius to make size dynamic */
+  stroke: var(--clr-accent);
+  stroke-width: .5rem;
+  stroke-linecap: round;
+  /* stroke-dashoffset: 0; */
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+  /* animation: dance 3s forwards ease-in-out; */
+  /* animation-delay: calc(2 * var(--animation-duration)); */
+}
+
+@keyframes dance {
+  0% {
+    opacity: 0
+  } 
+  50% {
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.time {
+  font-family: 'Rubik Mono One', 'Courier New', monospace;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -70%);
+  font-size: 3.5rem;
+  opacity: 0;
+  animation: flyin var(--animation-duration) forwards;
+  animation-delay: var(--animation-duration);
+}
+
+.pause {
+  top: 75%;
+  left: 50%;
+  transform: translate(-50%, -70%);
+  text-transform: uppercase;
+  letter-spacing: 8px;
+  font-weight: 500;
+  opacity: 0;
+  animation: flyin var(--animation-duration) forwards;
+  animation-delay: calc(1.5 * var(--animation-duration));
+}
+
+@keyframes flyin {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -70%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);;
+  }
+}

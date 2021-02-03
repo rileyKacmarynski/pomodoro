@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./app.css">
+  <title>Pomodoro</title>
+</head>
+
+<body>
+  <div class="content">
+    <div class="controls">
+      <div class="slider">
+        <input type="range" id="array-range" name="array-range" min="0" max="1570" step="1" value="500">
+        <label for="array-range">stroke-dasharray: <span id="stroke-dasharray-label"></span></label>
+      </div>
+      
+      <div class="slider">
+        <input type="range" id="offset-range" name="offset-range" min="0" max="1570" step="1" value="500">
+        <label for="offset-range">stroke-dashoffset: <span id="stroke-dashoffset-label"></span></label>
+      </div>
+      
+    </div>
+    <svg id="progress-bar" class="progress-bar" width="100%" height="100%" viewPort="0 0 100 100" version="2.0"
+      xmlns="http://www.w3.org/2000/svg">
+      <circle id="bar" class="bar" r="250" cx="50%" cy="50%"></circle>
+    </svg>
+  </div>
+  <script src="./app.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --clr-bg-primary: rgba(30, 33, 64, 1);
+  --clr-bg-secondary: rgba(42, 45, 82, 1);
+  --clr-primary: rgba(21, 25, 50, 1);
+  --clr-accent: rgba(246, 113, 115, 1);
+  --clr-text-light: rgba(255, 255, 255, .8);
+  --clr-text-medium: rgba(255, 255, 255, .65);
+  --clr-text-dark: rgba(21, 25, 50, 1);
+
+  --animation-duration: 1s;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--clr-bg-primary);
+  color: var(--clr-text-light);
+}
+
+.content {
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  text-align: center;
+}
+
+.progress-bar .bar {
+  fill: none;
+  stroke: var(--clr-accent);
+  stroke-width: .5rem;
+  stroke-linecap: round;
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+}
+
+.controls {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+.slider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0 9rem;
+}
+
+.slider label span {
+  font-weight: bold;
+}
