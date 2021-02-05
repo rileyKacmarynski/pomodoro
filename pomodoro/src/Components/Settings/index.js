@@ -1,3 +1,4 @@
-import SettingsBUtton from './SettingsButton';
+import SettingsButton from './SettingsButton';
+import SettingsModal from './SettingsModal';
 
-export default SettingsBUtton;
+export { SettingsButton, SettingsModal};

@@ -23,7 +23,7 @@ const GlobalStyle = createGlobalStyle`
     background-color: ${props => props.theme.bgPrimary};
     color: ${props => props.theme.textLight};
   }
-`
+`;
 
 export const fadeOpacity = keyframes`
   from {

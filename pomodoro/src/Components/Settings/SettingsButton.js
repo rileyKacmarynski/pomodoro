@@ -28,9 +28,18 @@ const StyledGear = styled(SettingsGear)`
   }
 `;
 
-function SettingsButton() {
+const Button = styled.button`
+  background: transparent;
+  border-radius: 50%;
+  border: none;
+  outline: none;
+`;
+
+function SettingsButton({onClick}) {
   return (
-    <StyledGear />
+    <Button onClick={onClick}>
+      <StyledGear />
+    </Button>
   )
 }
 
