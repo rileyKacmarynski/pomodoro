@@ -1,4 +1,4 @@
-import { ThemeProvider, createGlobalStyle } from 'styled-components';
+import { ThemeProvider, createGlobalStyle, keyframes } from 'styled-components';
 
 const theme = {
   primary: 'rgba(21, 25, 50, 1)',
@@ -24,6 +24,15 @@ const GlobalStyle = createGlobalStyle`
     color: ${props => props.theme.textLight};
   }
 `
+
+export const fadeOpacity = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
 
 export default function AppStyles({children}){
   return (

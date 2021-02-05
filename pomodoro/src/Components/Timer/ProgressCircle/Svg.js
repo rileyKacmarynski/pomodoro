@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useRef} from 'react'
 
 import styled from 'styled-components';
-import {useWindowEvent, useAnimationFrame} from 'hooks';
+import {useWindowEvent } from 'hooks';
 
 const StyledSvg = styled.svg`
   & circle {

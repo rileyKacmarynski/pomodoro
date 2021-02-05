@@ -1,21 +1,5 @@
-import styled, { keyframes } from 'styled-components';
-
-const getFadeColor = (props) => keyframes`
-  from {
-    background-color: ${props.theme.bgPrimary};
-  }
-  to {
-    background-color: ${props.theme.primary};
-  }
-`;
-const fadeOpacity = keyframes`
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-`;
+import styled from 'styled-components';
+import { fadeOpacity } from 'Components/AppStyles';
 
 const Styles = styled.div`
   --circle-size: clamp(15rem, 50vw, 25rem);
@@ -52,8 +36,8 @@ const Styles = styled.div`
     ${ props => props.theme.primary } 25%,  
     ${ props => props.theme.bgSecondary } 75%);
     opacity: 0;
-    box-shadow: -3em -3em 5em ${props => props.theme.bgSecondary}, 
-    3em 3em 5em ${props => props.theme.primary};
+    box-shadow: -3em -3em 5em ${props => props.theme.bgSecondary},
+                3em 3em 5em ${props => props.theme.primary};
     transition: box-shadow .15s linear;
     transition-delay: .1s;
     animation: ${fadeOpacity} ${props => props.theme.animationDuration} forwards;

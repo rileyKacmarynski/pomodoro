@@ -4,13 +4,14 @@ import styled from 'styled-components';
 
 import AppStyles from './AppStyles';
 import Timer from './Timer';
+import Logo from './Logo';
+import Settings from './Settings';
 
 // This will need to change when we add the top section and settings gear
 const Main = styled.main`
   min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: grid;
+  place-items: center;
 `;
 
 // this will have to come from settings at some point
@@ -28,7 +29,9 @@ function App() {
   return (
     <AppStyles>
       <Main className="App">
+        <Logo />
         <Timer onTimeExpires={onTimeExpires} startFrom={timerSettings.work} />
+        <Settings />
       </Main>
     </AppStyles>
   );

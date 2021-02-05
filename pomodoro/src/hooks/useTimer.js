@@ -37,7 +37,7 @@ export function useTimer(countDownFrom, onTimeExpires = () => {}){
       onTimeExpires();
     }
 
-    dispatch({ type: actions.UPDATE, payload: getTimeLeft() })
+    dispatch({ type: actions.UPDATE, payload: getTimeLeft() });
   });
   
   const getTimeLeft = () => {
