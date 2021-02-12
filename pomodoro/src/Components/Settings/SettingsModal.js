@@ -28,15 +28,13 @@ const Modal = styled.div`
   --clr-dark-grey: rgb(168 167 174);
   --clr-light-grey: rgb(241 241 251); 
 
-
   position: fixed;
   z-index: 100;
   color: ${props => props.theme.textDark};
   background-color: rgba(255, 255, 255, 1);
   border-radius: 20px;
   opacity: 0;
-  min-height: 20rem;
-  min-width: 30rem;
+  width: 30rem;
   transform: translateY(50px);
   transition: opacity 150ms linear, transform 150ms ease-in-out;
   pointer-events: none;
@@ -81,7 +79,7 @@ function SettingsModal({isOpen, closeModal}) {
         <div className="modal-header">
           <div>
             <h3>Settings</h3>
-            <CloseSvg />
+            <CloseSvg onClick={closeModal} />
           </div>
         </div>
         <SettingsForm />

@@ -11,6 +11,10 @@ const theme = {
   animationDuration: '1s'
 }
 
+// rgba(246, 113, 115, 1)
+// blue: #71f2f7
+// purple: #d881f7
+
 const GlobalStyle = createGlobalStyle`
   *, *::before, *::after {
     box-sizing: border-box;

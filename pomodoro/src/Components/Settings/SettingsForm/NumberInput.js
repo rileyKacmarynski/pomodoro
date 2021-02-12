@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 
 import { ReactComponent as Chevron } from './chevron.svg';
@@ -71,14 +71,19 @@ const Input = styled.input`
   }
 `;
 
-function NumberInput({label}) {
+function NumberInput({label, min = 0, step = 1, initialValue = 0}) {
+  const [value, setValue] = useState(initialValue);
+  
+  const increment = () => setValue(v => ++v);
+
+  const decrement = () => setValue(v => --v);
   return (
     <label>
       <Span>{label}</Span>
       <InputGroup>
-        <Input type="number" min="1" step="5" value="0" />
-        <span className="up"><Chevron /></span>
-        <span className="down"><Chevron /></span>
+        <Input type="number" name={label} id={label} min={min} step={step} value={value} onChange={e => setValue(e.target.value)} />
+        <span className="up" onClick={increment} ><Chevron /></span>
+        <span className="down" onClick={decrement} ><Chevron /></span>
       </InputGroup>
     </label>
   )
