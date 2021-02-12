@@ -11,6 +11,7 @@ const StyledSvg = styled.svg`
     stroke-linecap: round;
     transform: rotate(-90deg);
     transform-origin: 50% 50%;
+    transition: stroke 250ms linear;
   }
   `;
 

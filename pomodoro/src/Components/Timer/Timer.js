@@ -5,10 +5,11 @@ import ProgressCircle from './ProgressCircle';
 import Time from './Time';
 import ButtonText from './ButtonText';
 import {useTimer} from 'hooks';
+import {useSettingsState} from 'hooks/settings-context';
 
-
-export default function Timer({startFrom, onTimeExpires}) {
-  const startFromInMs = startFrom * 1000;
+export default function Timer({onTimeExpires}) {
+  const settings = useSettingsState();
+  const startFromInMs = settings.pomodoroTime * 1000;
 
   const {
     isPaused,

@@ -1,4 +1,4 @@
-import React, {useEffect } from 'react'
+import React from 'react'
 import styled from 'styled-components';
 import { fadeOpacity } from 'Components/AppStyles';
 
@@ -12,12 +12,7 @@ const Header = styled.h2`
   animation: ${fadeOpacity} ${props => props.theme.animationDuration} forwards;
 `;
 
-function Logo(props) {  
-  useEffect(() => {
-    console.log('logo rendering.')
-    console.log(props);
-  });
-  
+function Logo() {  
   return (
     <Header>pomodoro</Header>
   )

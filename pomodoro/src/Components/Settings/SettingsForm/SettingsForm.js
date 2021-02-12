@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import NumberInput from './NumberInput';
 import ColorPicker from './ColorPicker';
 import SubmitButton from './SubmitButton';
+import { useSettingsState, useSetSettingsState } from 'hooks/settings-context';
 
 const StyledForm = styled.form`
 
@@ -12,6 +13,7 @@ const StyledForm = styled.form`
   & > *:not(button) {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     gap: 1rem;
     padding-top: 1rem;
     padding-bottom: 1rem;
@@ -32,6 +34,7 @@ const StyledForm = styled.form`
   & .time-inputs {
     display: flex;
     justify-content: space-between;
+    width: 100%;
   }
 
   & > div:last-child {
@@ -45,31 +48,55 @@ const StyledForm = styled.form`
   }
 `;
 
-function SettingsForm() {
-  const [color, setColor] = useState();
+function SettingsForm({closeModal}) {
+  const settings = useSettingsState();
+  const setSettings = useSetSettingsState();
   
-  const onSubmit = (e) => {
+  const [color, setColor] = useState(settings.color);
+  const [pomodoro, setPomodoro] = useState(settings.pomodoroTime);
+  const [shortBreak, setShortBreak] = useState(settings.shortBreakTime);
+  const [longBreak, setLongBreak] = useState(settings.longBreakTime);
+  
+  const onSubmit = (e) => {    
     e.preventDefault();
+    
+    setSettings({
+      color: color,
+      pomodoroTime: pomodoro,
+      shortBreakTime: shortBreak,
+      longBreakTime: longBreak,
+    });
+
+    if(timeChanged()){
+      console.log('need to restart timer.');
+    }
+
+    closeModal();
   }
   
+  const timeChanged = () => 
+    pomodoro !== settings.pomodoroTime
+    || shortBreak !== settings.shortBreakTime
+    || longBreak !== settings.longBreakTime;
+  
   return (
-    <StyledForm>
+    <StyledForm  onSubmit={onSubmit}>
       <div className="time">
         <div className="time-header">
-          <p class="label-lg">Time (Minutes)</p>
+          <p className="label-lg">Time (Minutes)</p>
         </div>
         <div className="time-inputs">
-          <NumberInput label="pomodoro" min="1" step="5" initialValue="25" />
-          <NumberInput label="short break" min="1" step="1" initialValue="5" />
-          <NumberInput label="long break" min="1" step="1" initialValue="15" />
+          <NumberInput value={pomodoro} setValue={setPomodoro} label="pomodoro" min="1" step="1" />
+          <NumberInput value={shortBreak} setValue={setShortBreak} label="short break" min="1" step="1" />
+          <NumberInput value={longBreak} setValue={setLongBreak} label="long break" min="1" step="1" />
         </div>
       </div>
       <div>
-        <p class="label-lg">Color</p>
-        <ColorPicker />
+        <p className="label-lg">Color</p>
+        <ColorPicker value={color} setValue={setColor}/>
       </div>
       <div>
-        <SubmitButton onSubmit={onSubmit} />        
+        <SubmitButton />
       </div>
     </StyledForm>
   )

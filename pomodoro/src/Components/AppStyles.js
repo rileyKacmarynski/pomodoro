@@ -1,19 +1,7 @@
+import React from 'react';
 import { ThemeProvider, createGlobalStyle, keyframes } from 'styled-components';
 
-const theme = {
-  primary: 'rgba(21, 25, 50, 1)',
-  accent: 'rgba(246, 113, 115, 1)',
-  bgPrimary: 'rgba(30, 33, 64, 1)',
-  bgSecondary: 'rgba(42, 45, 82, 1)',
-  textLight: 'rgba(255, 255, 255, .8)',
-  textMedium: 'rgba(255, 255, 255, .65)',
-  textDark: 'rgba(21, 25, 50, 1)',
-  animationDuration: '1s'
-}
-
-// rgba(246, 113, 115, 1)
-// blue: #71f2f7
-// purple: #d881f7
+import { useSettingsState } from 'hooks/settings-context';
 
 const GlobalStyle = createGlobalStyle`
   *, *::before, *::after {
@@ -39,6 +27,18 @@ export const fadeOpacity = keyframes`
 `;
 
 export default function AppStyles({children}){
+  const {color} = useSettingsState();
+  const theme = {
+    primary: 'rgba(21, 25, 50, 1)',
+    accent: color,
+    bgPrimary: 'rgba(30, 33, 64, 1)',
+    bgSecondary: 'rgba(42, 45, 82, 1)',
+    textLight: 'rgba(255, 255, 255, .8)',
+    textMedium: 'rgba(255, 255, 255, .65)',
+    textDark: 'rgba(21, 25, 50, 1)',
+    animationDuration: '1s'
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />

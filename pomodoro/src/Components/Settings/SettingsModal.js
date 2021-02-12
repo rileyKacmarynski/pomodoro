@@ -82,7 +82,7 @@ function SettingsModal({isOpen, closeModal}) {
             <CloseSvg onClick={closeModal} />
           </div>
         </div>
-        <SettingsForm />
+        <SettingsForm closeModal={closeModal} />
       </Modal>
       <Overlay onClick={closeModal} className={isOpen && 'modal-open'} />
     </>

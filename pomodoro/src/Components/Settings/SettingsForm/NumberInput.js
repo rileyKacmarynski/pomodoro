@@ -71,8 +71,7 @@ const Input = styled.input`
   }
 `;
 
-function NumberInput({label, min = 0, step = 1, initialValue = 0}) {
-  const [value, setValue] = useState(initialValue);
+function NumberInput({label, min = 0, step = 1, value, setValue}) {
   
   const increment = () => setValue(v => ++v);
 

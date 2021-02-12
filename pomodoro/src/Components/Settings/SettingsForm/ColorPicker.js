@@ -66,42 +66,42 @@ const StyledDiv = styled.div`
 
 `;
 
-function ColorPicker() {
+function ColorPicker({value, setValue}) {
 
   return (
-    <StyledDiv class="input-group">
-      <label class="radio">
-        <span class="radio__input">
-          <input type="radio" name="colors" value="rgba(246, 113, 115, 1)"></input>
-          <span class="radio__control">
+    <StyledDiv className="input-group">
+      <label className="radio">
+        <span className="radio__input">
+          <input type="radio" name="colors" onChange={e => setValue(e.target.value)} checked={value === 'rgba(246, 113, 115, 1)'} value="rgba(246, 113, 115, 1)"></input>
+          <span className="radio__control">
             <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' aria-hidden="true" focusable="false">
-              <path fill='none' stroke='currentColor' stroke-width='3' d='M1.73 12.91l6.37 6.37L22.79 4.59' />
+              <path fill='none' stroke='currentColor' strokeWidth='3' d='M1.73 12.91l6.37 6.37L22.79 4.59' />
             </svg>
           </span>
         </span>
-        <span class="radio__label"></span>
+        <span className="radio__label"></span>
       </label>
-      <label class="radio">
-        <span class="radio__input">
-          <input type="radio" name="colors" value="#71f2f7;"></input>
-          <span class="radio__control">
+      <label className="radio">
+        <span className="radio__input">
+          <input type="radio" name="colors" onChange={e => setValue(e.target.value)} checked={value === '#71f2f7'} value="#71f2f7"></input>
+          <span className="radio__control">
             <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' aria-hidden="true" focusable="false">
-              <path fill='none' stroke='currentColor' stroke-width='3' d='M1.73 12.91l6.37 6.37L22.79 4.59' />
+              <path fill='none' stroke='currentColor' strokeWidth='3' d='M1.73 12.91l6.37 6.37L22.79 4.59' />
             </svg>
           </span>
         </span>
-        <span class="radio__label"></span>
+        <span className="radio__label"></span>
       </label>
-      <label class="radio">
-        <span class="radio__input">
-          <input type="radio" name="colors" value="#d881f7"></input>
-          <span class="radio__control">
+      <label className="radio">
+        <span className="radio__input">
+          <input type="radio" name="colors" onChange={e => setValue(e.target.value)} checked={value === '#d881f7'} value="#d881f7"></input>
+          <span className="radio__control">
           <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' aria-hidden="true" focusable="false">
-            <path fill='none' stroke='currentColor' stroke-width='3' d='M1.73 12.91l6.37 6.37L22.79 4.59' />
+            <path fill='none' stroke='currentColor' strokeWidth='3' d='M1.73 12.91l6.37 6.37L22.79 4.59' />
           </svg>
           </span>
         </span>
-        <span class="radio__label"></span>
+        <span className="radio__label"></span>
       </label>
     </StyledDiv>
   )
