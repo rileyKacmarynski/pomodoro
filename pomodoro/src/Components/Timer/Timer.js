@@ -4,41 +4,20 @@ import TimerStyles from './TimerStyles';
 import ProgressCircle from './ProgressCircle';
 import Time from './Time';
 import ButtonText from './ButtonText';
-import {useSettingsState} from 'hooks/settings-context';
+import {useSettingsState} from 'hooks/settingsContext';
+import {usePomodoroState, states} from 'hooks/pomodoroStateContext';
 import { useTimer } from 'hooks';
 
 
-const states = Object.freeze({
-  "pomodoro": 1,
-  "shortBreak": 2,
-  "longBreak": 3
-});
   
 export default function Timer() {
   const [initializing, setInitializing] = useState(true);
   const [startFromInMs, setStartFromInMs] = useState();
-
-  
-  const [breakCount, setBreakCount] = useState(0);
-  const [currentState, setCurrentState] = useState(states.pomodoro);
+  const [state, moveNext] = usePomodoroState();
   
   function onTimeExpires() {
     reset();
-    
-    if(currentState === states.pomodoro){
-      if(breakCount === 3){
-        // time for a long break
-        setCurrentState(states.longBreak);
-        restartTimer(longBreakTime);
-      } else {
-        setCurrentState(states.shortBreak);
-        restartTimer(longBreakTime);
-      }
-      setBreakCount(c => c + 1);
-    } else {
-      setCurrentState(states.pomodoro);
-      restartTimer(longBreakTime);
-    }
+    moveNext();
   }
 
   const {
@@ -55,18 +34,18 @@ export default function Timer() {
     resume,
     reset,
   } = useTimer(onTimeExpires);
-
   
-  // so how do we keep track of current state of pomodoro and move to the next one?
+  
+  // restart timer when settings change. 
   useEffect(() => {
     if(initializing) return;
-    console.log('time has changed. Restart timer');
+
     reset();
     restartTimer(pomodoroTime);
 
   }, [pomodoroTime, shortBreakTime, longBreakTime]);
   
-  
+  // start when done initializing
   useEffect(() => {
     if(initializing) {
       setStartFromInMs(inMs(pomodoroTime));
@@ -75,6 +54,23 @@ export default function Timer() {
     start(startFromInMs);
     
   }, [initializing, startFromInMs]);
+  
+  // restart when state changes
+  useEffect(() => {
+    if(initializing) return;
+    
+    switch(state){
+      case states.pomodoro:
+        restartTimer(pomodoroTime);
+        break;
+      case states.shortBreak:
+        restartTimer(shortBreakTime);
+        break;
+      case states.longBreak:
+        restartTimer(longBreakTime);
+        break;
+    }
+  }, [state])
   
   function togglePause(){
     if(!isPaused){
@@ -96,7 +92,7 @@ export default function Timer() {
   }
 
   function inMs(time) {
-    return time * 1000;
+    return time * 1000 * 60;
   }
   
   return (

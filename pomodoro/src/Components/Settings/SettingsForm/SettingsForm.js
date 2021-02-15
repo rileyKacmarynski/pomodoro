@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import NumberInput from './NumberInput';
 import ColorPicker from './ColorPicker';
 import SubmitButton from './SubmitButton';
-import { useSettingsState, useSetSettingsState } from 'hooks/settings-context';
+import { useSettingsState, useSetSettingsState } from 'hooks/settingsContext';
 
 const StyledForm = styled.form`
 

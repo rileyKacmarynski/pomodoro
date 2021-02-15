@@ -1,7 +1,7 @@
 import React from 'react';
 import { ThemeProvider, createGlobalStyle, keyframes } from 'styled-components';
 
-import { useSettingsState } from 'hooks/settings-context';
+import { useSettingsState } from 'hooks/settingsContext';
 
 const GlobalStyle = createGlobalStyle`
   *, *::before, *::after {

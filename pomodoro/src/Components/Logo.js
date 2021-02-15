@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components';
+
 import { fadeOpacity } from 'Components/AppStyles';
+import { usePomodoroState, states } from 'hooks/pomodoroStateContext';
 
 const Header = styled.h2`
   font-size: 2rem;
@@ -13,8 +15,21 @@ const Header = styled.h2`
 `;
 
 function Logo() {  
+  const [state] = usePomodoroState();
+
+  const getText = () => {
+    switch(state){
+      case states.pomodoro:
+        return "pomodoro";
+      case states.shortBreak:
+        return "short break";
+      case states.longBreak:
+        return "long break";
+    }
+  }
+  
   return (
-    <Header>pomodoro</Header>
+    <Header>{getText()}</Header>
   )
 }
 

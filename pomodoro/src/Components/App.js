@@ -6,7 +6,8 @@ import AppStyles from './AppStyles';
 import Logo from './Logo';
 import Timer from './Timer';
 import { SettingsButton, SettingsModal } from './Settings';
-import { SettingsProvider } from 'hooks/settings-context';
+import { SettingsProvider } from 'hooks/settingsContext';
+import { PomodoroStateProvider } from 'hooks/pomodoroStateContext';
 
 const Main = styled.main`
   min-height: 100vh;
@@ -20,14 +21,16 @@ function App() {
 
   return (
     <SettingsProvider>
-      <AppStyles>
-        <Main className={"App"}>
-          <Logo />
-          <Timer />
-          <SettingsButton onClick={() => setModalOpen(s => !s)} />
-          <SettingsModal isOpen={modalOpen} closeModal={() => setModalOpen(false)} />
-        </Main>
-      </AppStyles>
+      <PomodoroStateProvider>
+        <AppStyles>
+          <Main className={"App"}>
+            <Logo />
+            <Timer />
+            <SettingsButton onClick={() => setModalOpen(s => !s)} />
+            <SettingsModal isOpen={modalOpen} closeModal={() => setModalOpen(false)} />
+          </Main>
+        </AppStyles>
+      </PomodoroStateProvider>
     </SettingsProvider>
   );
 }
