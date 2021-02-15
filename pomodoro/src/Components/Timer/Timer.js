@@ -4,30 +4,78 @@ import TimerStyles from './TimerStyles';
 import ProgressCircle from './ProgressCircle';
 import Time from './Time';
 import ButtonText from './ButtonText';
-import {useTimer} from 'hooks';
 import {useSettingsState} from 'hooks/settings-context';
+import { useTimer } from 'hooks';
 
-export default function Timer({onTimeExpires}) {
-  const settings = useSettingsState();
-  const startFromInMs = settings.pomodoroTime * 1000;
 
+const states = Object.freeze({
+  "pomodoro": 1,
+  "shortBreak": 2,
+  "longBreak": 3
+});
+  
+export default function Timer() {
+  const [initializing, setInitializing] = useState(true);
+  const [startFromInMs, setStartFromInMs] = useState();
+
+  
+  const [breakCount, setBreakCount] = useState(0);
+  const [currentState, setCurrentState] = useState(states.pomodoro);
+  
+  function onTimeExpires() {
+    reset();
+    
+    if(currentState === states.pomodoro){
+      if(breakCount === 3){
+        // time for a long break
+        setCurrentState(states.longBreak);
+        restartTimer(longBreakTime);
+      } else {
+        setCurrentState(states.shortBreak);
+        restartTimer(longBreakTime);
+      }
+      setBreakCount(c => c + 1);
+    } else {
+      setCurrentState(states.pomodoro);
+      restartTimer(longBreakTime);
+    }
+  }
+
+  const {
+    pomodoroTime,
+    shortBreakTime,
+    longBreakTime 
+  } = useSettingsState();
+  
   const {
     isPaused,
     timeLeft,
     start,
     pause,
     resume,
-  } = useTimer(startFromInMs, onTimeExpires);
+    reset,
+  } = useTimer(onTimeExpires);
 
-  const [initializing, setInitializing] = useState(true);
-
+  
+  // so how do we keep track of current state of pomodoro and move to the next one?
   useEffect(() => {
     if(initializing) return;
+    console.log('time has changed. Restart timer');
+    reset();
+    restartTimer(pomodoroTime);
 
-    start();
-
-  }, [initializing]);
-
+  }, [pomodoroTime, shortBreakTime, longBreakTime]);
+  
+  
+  useEffect(() => {
+    if(initializing) {
+      setStartFromInMs(inMs(pomodoroTime));
+      return;
+    }
+    start(startFromInMs);
+    
+  }, [initializing, startFromInMs]);
+  
   function togglePause(){
     if(!isPaused){
       pause();
@@ -36,10 +84,19 @@ export default function Timer({onTimeExpires}) {
     }
   }
   
+  function restartTimer(time){
+    setStartFromInMs(inMs(time));
+    start(inMs(time));
+  }
+  
   function getSeconds(time){
     // ceil will make it so the time spends a second on 
     // the start number rather than a second on "0". 
     return  Math.ceil(time / 1000);
+  }
+
+  function inMs(time) {
+    return time * 1000;
   }
   
   return (

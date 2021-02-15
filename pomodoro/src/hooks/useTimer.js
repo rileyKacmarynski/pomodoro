@@ -6,7 +6,7 @@ import { useAnimationFrame } from './index';
 // the timeLeft is set within an animation frame so the timeLeft value
 // can be sued in the useEffect hook for animation. 
 // can optionally pass in a callback that gets ran when time expires.
-export function useTimer(countDownFrom, onTimeExpires = () => {}){
+export function useTimer(onTimeExpires = () => {}){
   
   // probably a bit overkill to use a reducer instead of regular
   // state, but it's good practice. 
@@ -33,7 +33,7 @@ export function useTimer(countDownFrom, onTimeExpires = () => {}){
 
     if(isExpired()){
       dispatch({ type: actions.EXPIRE });
-      stopAnimation();
+      // stopAnimation(); this will stop the timer instead of changing to next stage
       onTimeExpires();
     }
 
@@ -53,7 +53,7 @@ export function useTimer(countDownFrom, onTimeExpires = () => {}){
 
   const isExpired = () => getTimeLeft() <= 0;
   
-  const start = () => {
+  const start = (countDownFrom) => {
     const start = new Date().getTime();
     const endTime = start + countDownFrom;
     dispatch({ type: actions.START, payload: endTime })
@@ -70,12 +70,18 @@ export function useTimer(countDownFrom, onTimeExpires = () => {}){
     dispatch({ type: actions.RESUME, payload: newEndTime });
   }
   
+  const reset = (startTime) => {
+    dispatch({type: actions.RESET});
+    start(startTime);
+  }
+  
   return {
     isPaused,
     start,
     pause,
     resume,
     timeLeft,
+    reset
   }
 }
 
@@ -85,6 +91,7 @@ const actions = {
   RESUME: "RESUME",
   UPDATE: "UPDATE",
   EXPIRE: "EXPIRE",
+  RESET: "RESET",
 };
 
 function reducer(state, action) {
@@ -115,6 +122,14 @@ function reducer(state, action) {
         ...state,
         timeLeft: 0,
         started: false
+      };
+    case actions.RESET:
+      return {
+        endTime: 0,
+        isPaused: false,
+        pauseStart: 0,
+        started: false,
+        timeLeft: 0,
       };
     default:
       throw new Error(`Unkown action type ${action.type}`);
