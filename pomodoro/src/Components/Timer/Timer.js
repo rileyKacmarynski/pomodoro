@@ -98,7 +98,8 @@ export default function Timer() {
   return (
     <div onClick={() => togglePause()}>
       <TimerStyles>
-      <ProgressCircle 
+      <ProgressCircle
+        forwards={state === states.pomodoro}
         startTime={startFromInMs} 
         timeLeft={timeLeft}
         setInitializing={setInitializing}

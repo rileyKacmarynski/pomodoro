@@ -15,7 +15,7 @@ const StyledSvg = styled.svg`
   }
   `;
 
-export default function Svg({startTime, timeLeft, setInitializing, initializing}) {
+export default function Svg({startTime, timeLeft, setInitializing, initializing, forwards}) {
   const svgEl = useRef(null)
   const circleEl = useRef(null);
   const gapFromEdgeInPixels = 6;
@@ -54,15 +54,20 @@ export default function Svg({startTime, timeLeft, setInitializing, initializing}
   }, []);
 
   useEffect(() =>{
-    const pctComplete = timeLeft / startTime;
+    // for pomodoro time the circle is empty and fills up ( pct < 1 means circle is filling)
+    // for breaks the circle is full and empties (pct > 1 means circle is emptying )
+    const pct = forwards 
+      ? timeLeft / startTime
+      : (timeLeft + startTime) / startTime;
+      
     const distanceComplete = initializing 
       ? 0 
-      : Math.round(pctComplete * calculateCircumference());
+      : Math.round(pct * calculateCircumference());
 
     setCircleAttrs(
       calculateRadius(), 
       calculateCircumference(), 
-      distanceComplete
+      distanceComplete,
     );
   }, [timeLeft]);
     
