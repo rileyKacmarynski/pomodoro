@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+import { useStickyState } from './index';
+
 const SettingsStateContext = React.createContext();
 const SettingsSetStateContext = React.createContext();
 
@@ -15,7 +17,7 @@ const initialState = {
 };
 
 function SettingsProvider({children}){
-  const [state, setState] = React.useState(initialState);
+  const [state, setState] = useStickyState(initialState, 'settings');
 
   return(
     <SettingsStateContext.Provider value={state}>

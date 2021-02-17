@@ -92,7 +92,7 @@ export default function Timer() {
   }
 
   function inMs(time) {
-    return time * 1000 * 60;
+    return time * 1000;
   }
   
   return (

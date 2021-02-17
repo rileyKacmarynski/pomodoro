@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTimer } from './useTimer.js';
 
 export { useTimer };
@@ -53,4 +53,23 @@ export function useAnimationFrame(callback){
     requestRef.current = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(requestRef.current);
   }, []);
+}
+
+// https://www.joshwcomeau.com/react/persisting-react-state-in-localstorage/
+export function useStickyState(defaultValue, key){
+  const keyPrefix = 'pomodoro-';
+
+  const [value, setValue] = useState(() => {
+    const stickyValue = window.localStorage.getItem(keyPrefix + key);
+
+    return stickyValue !== null
+      ? JSON.parse(stickyValue)
+      : defaultValue;
+  });
+
+  useEffect(() => {
+    window.localStorage.setItem(keyPrefix + key, JSON.stringify(value));
+  }, [value, key]);
+
+  return [value, setValue];
 }
