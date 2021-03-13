@@ -41,6 +41,7 @@ const StyledDiv = styled.div`
   }
   
   & .radio__input {
+    cursor: pointer;
     display: flex;
     position: relative;
   }

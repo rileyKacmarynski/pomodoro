@@ -3,6 +3,7 @@ import React, {useState, useEffect, useRef} from 'react'
 import styled from 'styled-components';
 import {useWindowEvent } from 'hooks';
 
+
 const StyledSvg = styled.svg`
   & circle {
     fill: none;

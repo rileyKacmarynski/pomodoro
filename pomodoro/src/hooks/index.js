@@ -60,6 +60,8 @@ export function useStickyState(defaultValue, key){
   const keyPrefix = 'pomodoro-';
 
   const [value, setValue] = useState(() => {
+    // return defaultValue;
+
     const stickyValue = window.localStorage.getItem(keyPrefix + key);
 
     return stickyValue !== null

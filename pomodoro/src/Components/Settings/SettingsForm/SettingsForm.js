@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import NumberInput from './NumberInput';
 import ColorPicker from './ColorPicker';
 import SubmitButton from './SubmitButton';
+import DemoSwitch from './DemoSwitch';
 import { useSettingsState, useSetSettingsState } from 'hooks/settingsContext';
 
 const StyledForm = styled.form`
@@ -56,15 +57,17 @@ function SettingsForm({closeModal}) {
   const [pomodoro, setPomodoro] = useState(settings.pomodoroTime);
   const [shortBreak, setShortBreak] = useState(settings.shortBreakTime);
   const [longBreak, setLongBreak] = useState(settings.longBreakTime);
-  
+  const [demoMode, setDemoMode] = useState(settings.demoMode);
+
   const onSubmit = (e) => {    
     e.preventDefault();
-    
+
     setSettings({
       color: color,
       pomodoroTime: pomodoro,
       shortBreakTime: shortBreak,
       longBreakTime: longBreak,
+      demoMode: demoMode
     });
 
     if(timeChanged()){
@@ -83,7 +86,7 @@ function SettingsForm({closeModal}) {
     <StyledForm  onSubmit={onSubmit}>
       <div className="time">
         <div className="time-header">
-          <p className="label-lg">Time (Minutes)</p>
+          <p className="label-lg">Time ({demoMode ? 'seconds' : 'minutes'})</p>
         </div>
         <div className="time-inputs">
           <NumberInput value={pomodoro} setValue={setPomodoro} label="pomodoro" min="1" step="1" />
@@ -94,6 +97,10 @@ function SettingsForm({closeModal}) {
       <div>
         <p className="label-lg">Color</p>
         <ColorPicker value={color} setValue={setColor}/>
+      </div>
+      <div>
+        <p className="label-lg">Demo Mode</p>
+        <DemoSwitch value={demoMode} setValue={setDemoMode} />
       </div>
       <div>
         <SubmitButton />

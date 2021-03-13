@@ -23,7 +23,8 @@ export default function Timer() {
   const {
     pomodoroTime,
     shortBreakTime,
-    longBreakTime 
+    longBreakTime,
+    demoMode
   } = useSettingsState();
   
   const {
@@ -43,7 +44,7 @@ export default function Timer() {
     reset();
     restartTimer(pomodoroTime);
 
-  }, [pomodoroTime, shortBreakTime, longBreakTime]);
+  }, [pomodoroTime, shortBreakTime, longBreakTime, demoMode]);
   
   // start when done initializing
   useEffect(() => {
@@ -92,7 +93,9 @@ export default function Timer() {
   }
 
   function inMs(time) {
-    return time * 1000;
+    return demoMode 
+      ? time * 1000 
+      : time * 60 * 1000;
   }
   
   return (

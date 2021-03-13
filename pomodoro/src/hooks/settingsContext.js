@@ -13,7 +13,8 @@ const initialState = {
   color: 'rgba(246, 113, 115, 1)',
   pomodoroTime: 25,
   shortBreakTime: 5,
-  longBreakTime: 15
+  longBreakTime: 15,
+  demoMode: false,
 };
 
 function SettingsProvider({children}){
