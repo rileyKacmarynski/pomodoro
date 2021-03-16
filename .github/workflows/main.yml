@@ -20,19 +20,19 @@ jobs:
     - name: Install npm packages
       shell: bash
       run: |
-        cd $GITHUB_WORKSPACE/src/WebApp
+        cd $GITHUB_WORKSPACE/src
         npm install
     - name: Build app
       shell: bash
       run: |
-        cd $GITHUB_WORKSPACE/src/WebApp
+        cd $GITHUB_WORKSPACE/src
         npm run build
     - name: Upload to blob storage
       uses: azure/CLI@v1
       with:
         azcliversion: 2.0.72
         inlineScript: |
-            az storage blob upload-batch --account-name rkpomodoro -d '$web' -s $GITHUB_WORKSPACE/src/WebApp/dist
+            az storage blob upload-batch --account-name rkpomodoro -d '$web' -s $GITHUB_WORKSPACE/dist
     - name: logout
       run: |
             az logout
