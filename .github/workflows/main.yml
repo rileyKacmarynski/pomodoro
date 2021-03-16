@@ -13,20 +13,30 @@ jobs:
   build:
     runs-on: ubuntu-latest
     
-    strategy:
-        matrix:
-            node-version: [10.x]
     steps:            
-    - uses: actions/checkout@v2
-    - uses: azure/login@v1
-      with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}        
-    - name: Use Node.js ${{ martix.node-version }}
+    - uses: actions/checkout@v2      
+    - name: Use Node.js 12.x
       uses: actions/setup-node@v1
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: 12.x
     - run: npm ci
     - run: npm run build
+    - name: Share artifact inside workflow
+      uses: actions/upload-artifact@v1
+      with:
+          name: react-github-actions-build
+          path: build
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+    - uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}  
+    - name: Get Artifact
+      uses: actions/download-artifact@v1
+      with:
+        name: react-github-actions-build
     - name: Upload to blob storage
       uses: azure/CLI@v1
       with:
