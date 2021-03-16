@@ -29,20 +29,22 @@ const Modal = styled.div`
   --clr-light-grey: rgb(241 241 251); 
 
   position: fixed;
+  top: 50%;
+  left: 50%;
   z-index: 100;
   color: ${props => props.theme.textDark};
   background-color: rgba(255, 255, 255, 1);
   border-radius: 20px;
   opacity: 0;
   width: 30rem;
-  transform: translateY(50px);
+  transform: translate(-50%, calc(-50% + 50px));
   transition: opacity 150ms linear, transform 150ms ease-in-out;
   pointer-events: none;
 
   &.modal-open {
     opacity: 1;
     pointer-events: auto;
-    transform: translateY(0);
+    transform: translate(-50%, -50%);
   }
 
   & .modal-header {
