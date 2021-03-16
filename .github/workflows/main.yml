@@ -12,27 +12,27 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    
+    strategy:
+        matrix:
+            node-version: [10.x]
     steps:            
     - uses: actions/checkout@v2
     - uses: azure/login@v1
       with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}        
-    - name: Install npm packages
-      shell: bash
-      run: |
-        cd $GITHUB_WORKSPACE/src
-        npm install
-    - name: Build app
-      shell: bash
-      run: |
-        cd $GITHUB_WORKSPACE/src
-        npm run build
+    - name: Use Node.js ${{ martix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: npm ci
+    - run: npm run build
     - name: Upload to blob storage
       uses: azure/CLI@v1
       with:
         azcliversion: 2.0.72
         inlineScript: |
-            az storage blob upload-batch --account-name rkpomodoro -d '$web' -s $GITHUB_WORKSPACE/dist
+            az storage blob upload-batch --account-name rkpomodoro -d '$web' -s ./dist
     - name: logout
       run: |
             az logout
