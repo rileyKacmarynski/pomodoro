@@ -126,7 +126,7 @@ body {
   /* animation-delay: calc(2 * var(--animation-duration)); */
 }
 
-@keyframes dance {
+/* @keyframes dance {
   0% {
     opacity: 0
   } 
@@ -136,7 +136,7 @@ body {
   100% {
     stroke-dashoffset: 0;
   }
-}
+} */
 
 .time {
   font-family: 'Rubik Mono One', 'Courier New', monospace;

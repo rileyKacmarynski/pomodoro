@@ -58,7 +58,7 @@ animation.onfinish = () => {
 }
 
 function startTimer(){
-  setInterval(() => {
+  let intervalId = setInterval(() => {
     if(timeLeft <= 0) {
       clearInterval(intervalId);
       return;

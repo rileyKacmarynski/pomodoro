@@ -1,28 +1,51 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap');
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
 :root {
-  --clr-bg-primary: rgba(30, 33, 64, 1);
-  --clr-bg-secondary: rgba(42, 45, 82, 1);
-  --clr-primary: rgba(21, 25, 50, 1);
-  --clr-accent: rgba(246, 113, 115, 1);
-  --clr-text-light: rgba(255, 255, 255, .8);
-  --clr-text-medium: rgba(255, 255, 255, .65);
-  --clr-text-dark: rgba(21, 25, 50, 1);
+  --shadow-color: 0deg 0% 63%;
+  --shadow-elevation-low: 0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.34),
+    0.4px 0.8px 1px -1.2px hsl(var(--shadow-color) / 0.34),
+    1px 2px 2.5px -2.5px hsl(var(--shadow-color) / 0.34);
+  --shadow-elevation-medium: 0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.36),
+    0.8px 1.6px 2px -0.8px hsl(var(--shadow-color) / 0.36),
+    2.1px 4.1px 5.2px -1.7px hsl(var(--shadow-color) / 0.36),
+    5px 10px 12.6px -2.5px hsl(var(--shadow-color) / 0.36);
+  --shadow-elevation-high: 0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.34),
+    1.5px 2.9px 3.7px -0.4px hsl(var(--shadow-color) / 0.34),
+    2.7px 5.4px 6.8px -0.7px hsl(var(--shadow-color) / 0.34),
+    4.5px 8.9px 11.2px -1.1px hsl(var(--shadow-color) / 0.34),
+    7.1px 14.3px 18px -1.4px hsl(var(--shadow-color) / 0.34),
+    11.2px 22.3px 28.1px -1.8px hsl(var(--shadow-color) / 0.34),
+    17px 33.9px 42.7px -2.1px hsl(var(--shadow-color) / 0.34),
+    25px 50px 62.9px -2.5px hsl(var(--shadow-color) / 0.34);
+
+  --clr-slate-50: #f8fafc;
+  --clr-slate-100: #f1f5f9;
+  --clr-slate-200: #e2e8f0;
+  --clr-slate-300: #cbd5e1;
+  --clr-slate-400: #94a3b8;
+  --clr-slate-500: #64748b;
+  --clr-slate-600: #475569;
+  --clr-slate-700: #334155;
+  --clr-slate-800: #1e293b;
+  --clr-slate-900: #0f172a;
+  --clr-slate-950: #020617;
 
   --animation-duration: 1s;
 }
 
 body {
   font-family: 'Poppins', sans-serif;
-  background-color: var(--clr-bg-primary);
-  color: var(--clr-text-light);
+  background-color: var(--clr-slate-50);
+  color: var(--clr-slate-950);
 }
 
 .content {
@@ -33,7 +56,7 @@ body {
 }
 
 .pomodoro,
-.pomodoro::before, 
+.pomodoro::before,
 .progress-container {
   border-radius: 50%;
 }
@@ -46,45 +69,57 @@ body {
   --circle-size: clamp(15rem, 50vw, 25rem);
 
   position: relative;
-  background-color: var(--clr-primary);
   width: var(--circle-size);
   height: var(--circle-size);
-  transition: background-color .15s linear;
+  transition: background-color 0.15s linear;
   animation: fadeColor 1s forwards;
+  box-shadow: var(--shadow-elevation-medium);
+  transition: background ease-out 100ms;
+  z-index: 0;
+}
+
+.pomodoro:hover {
+  cursor: pointer;
+  background: var(--clr-slate-100);
 }
 
 /* messing with opacity here will create another stacking context
    and the gradient will not sit behind solid circle */
 @keyframes fadeColor {
   from {
-    background-color: var(--clr-bg-primary);
+    box-shadow: none;
   }
   to {
-    background-color: var(--clr-primary);
+    box-shadow: var(--shadow-elevation-medium);
   }
 }
 
-.pomodoro::before {
-  /* This will be the width for the border. Can't use border property with gradient */
-  --border-width: 1rem;     
-
+/* .pomodoro::before {
   position: absolute;
   content: '';
-  height: calc(100% + 2 * var(--border-width));   /* 2x to add border width on each side */
+  inset: -1rem;
+  height: calc(
+    100% + 2 * var(--border-width)
+  );
   width: calc(100% + 2 * var(--border-width));
-  transform: translate(calc(-1 * var(--border-width)), calc(-1 * var(--border-width)));
+  transform: translate(
+    calc(-1 * var(--border-width)),
+    calc(-1 * var(--border-width))
+  );
   z-index: -1;
-  background-image: linear-gradient(135deg, 
-  var(--clr-primary) 25%, 
-  var(--clr-primary) 25%,  
-  var(--clr-bg-secondary) 75%);
+  background-image: linear-gradient(
+    135deg,
+    var(--clr-primary) 25%,
+    var(--clr-primary) 25%,
+    var(--clr-bg-secondary) 75%
+  );
   opacity: 0;
-  box-shadow: -3em -3em 5em var(--clr-bg-secondary), 
-  3em 3em 5em var(--clr-primary);
-  transition: box-shadow .15s linear;
-  transition-delay: .1s;
+  box-shadow: -3em -3em 5em var(--clr-bg-secondary),
+    3em 3em 5em var(--clr-primary);
+  transition: box-shadow 0.15s linear;
+  transition-delay: 0.1s;
   animation: fadeOpacity var(--animation-duration) forwards;
-}
+} */
 
 @keyframes fadeOpacity {
   from {
@@ -95,20 +130,10 @@ body {
   }
 }
 
-.pomodoro:hover {
-  cursor: pointer;
-  background-color: var(--clr-bg-primary);
-}
-
-.pomodoro:hover::before {
-  box-shadow: 0em 0em 10em var(--clr-accent),
-              0em 0em 10em var(--clr-primary);
-}
-
 .progress-container {
   height: 100%;
   width: 100%;
-  padding: .25rem;
+  padding: 0.25rem;
 }
 
 .progress-bar .bar {
@@ -116,26 +141,14 @@ body {
   width: 100%; */
   fill: none;
   /* r: calc(50% - .5rem);   only works with SVG 2. subtract stroke width from circle radius to make size dynamic */
-  stroke: var(--clr-accent);
-  stroke-width: .5rem;
+  stroke: var(--clr-slate-950);
+  stroke-width: 0.5rem;
   stroke-linecap: round;
   /* stroke-dashoffset: 0; */
   transform: rotate(-90deg);
   transform-origin: 50% 50%;
   /* animation: dance 3s forwards ease-in-out; */
   /* animation-delay: calc(2 * var(--animation-duration)); */
-}
-
-@keyframes dance {
-  0% {
-    opacity: 0
-  } 
-  50% {
-    opacity: 1;
-  }
-  100% {
-    stroke-dashoffset: 0;
-  }
 }
 
 .time {
@@ -168,6 +181,6 @@ body {
   }
   to {
     opacity: 1;
-    transform: translate(-50%, -50%);;
+    transform: translate(-50%, -50%);
   }
 }
